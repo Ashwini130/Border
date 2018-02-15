@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Border</string>
+    <string name="height">h</string>
+    <string name="width">w</string>
+</resources>
