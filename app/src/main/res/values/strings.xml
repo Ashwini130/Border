@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Border</string>
-    <string name="height">h</string>
-    <string name="width">w</string>
+    <string name="set">Set Border</string>
+    <string name="preference">Set Preference</string>
+    <string name="Settings">Settings</string>
+    <string name="Submit">submit</string>
+    <string name="settings">settings</string>
 </resources>

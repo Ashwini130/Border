@@ -24,7 +24,7 @@ public class border extends Service {
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mParams;
-
+    private RelativeLayout thisview;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -36,6 +36,7 @@ public class border extends Service {
         super.onConfigurationChanged(newConfig);
         //Your handling
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -69,8 +70,15 @@ public class border extends Service {
         mParams.gravity = Gravity.LEFT | Gravity.TOP | Gravity.BOTTOM | Gravity.RIGHT;
 
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        RelativeLayout thisview = (RelativeLayout) inflater.inflate(R.layout.boundary, null);
+        thisview = (RelativeLayout) inflater.inflate(R.layout.boundary, null);
         mWindowManager.addView(thisview, mParams);
+
         return START_NOT_STICKY;
+    }
+
+    public void onDestroy() {
+        mWindowManager.removeView(thisview);
+        super.onDestroy();
+        // The service is no longer used and is being destroyed
     }
 }
