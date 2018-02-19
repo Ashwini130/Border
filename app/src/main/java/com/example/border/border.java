@@ -31,21 +31,9 @@ public class border extends Service {
         return null;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //Your handling
-    }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("LocalService", "Received start id " + startId + ": " + intent);
-
-
-
-
+    public void initUI()
+    {
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
@@ -72,12 +60,30 @@ public class border extends Service {
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         thisview = (RelativeLayout) inflater.inflate(R.layout.boundary, null);
         mWindowManager.addView(thisview, mParams);
+    }
 
+    public void desroyUI(){
+        mWindowManager.removeView(thisview);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i("LocalService", "Received start id " + startId + ": " + intent);
+        initUI();
         return START_NOT_STICKY;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        desroyUI();
+        initUI();
+    }
+
+
     public void onDestroy() {
-        mWindowManager.removeView(thisview);
+        desroyUI();
         super.onDestroy();
         // The service is no longer used and is being destroyed
     }
